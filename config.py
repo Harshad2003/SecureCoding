@@ -23,4 +23,5 @@ try:
 except as e:
     print ("I am unable to connect to the database")
     print(e)
+    raise(e)
 mycursor =conn.cursor()
