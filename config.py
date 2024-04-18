@@ -20,6 +20,7 @@ try:
     conn = psycopg2.connect(database="postgres", user="postgres",  
     password="root", host="localhost")
     print("connected")
-except:
+except as e:
     print ("I am unable to connect to the database")
+    print(e)
 mycursor =conn.cursor()
