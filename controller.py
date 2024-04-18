@@ -7,13 +7,11 @@ from config import app,db,mycursor
 from flask.wrappers import Request
 from models import login_details
 from sqlalchemy import text
-#change
 
 global unqmail 
 global orderid
 global totalvar
 unqmail = ''
-#app = Flask(__name__)
 
 @app.route('/')
 def home1():
@@ -110,23 +108,14 @@ def about():
               p5 = request.form.get('addr')
               p6 = request.form.get('number')
               p7 = request.form.get('pswd')
-              #obj1 = user_table(p1,p2,p3,p4,p5,p6)
-              #db.session.add(obj1)
-              #print(obj1,p1,p2,p3,p4,p5,p6,p7)
-              #db.session.execute("insert into user_table(f_name,l_name,email,gender,address,create_date,mobile_number) values('{}','{}','{}','{}','{}',current_date,'{}')".format(p1,p2,p3,p4,p5,p6))
-              #db.session.commit()
               sql_statement = text("insert into user_table(f_name, l_name, email, gender, address, create_date, mobile_number) values(:p1, :p2, :p3, :p4, :p5, current_date, :p6)")
-              # Then execute the statement with parameters
               db.session.execute(sql_statement, {"p1": p1, "p2": p2, "p3": p3, "p4": p4, "p5": p5, "p6": p6})
               db.session.commit()
-              #obj2 = login_details(p3,p7)
-              #db.session.add(obj2)
               unqmail =p3
               sql_statement = text("insert into login_details values(:p3, :p7)")
               db.session.execute(sql_statement, {"p3": p3, "p7": p7})
               db.session.commit()
               return redirect(url_for('home1'))
-              #return render_template('/menu')
 @app.route("/loginuser",methods = ['POST','GET'] )
 def userlogin():
        error = None
@@ -140,7 +129,6 @@ def userlogin():
               sql_statement = text("select user_mail from login_details where user_mail = :p1 and user_password = :p2")
               res = db.session.execute(sql_statement, {"p1": p1, "p2": p2})
               res = res.fetchall()[0][0]
-              #print(res,p1)
               if res!=p1:
                      error = "INVALID PASSWORD"
                      return render_template("signup.html",error=error)
@@ -156,11 +144,6 @@ def cartout():
               data = session.get('data', None)
               print("session items: " ,data)
        return redirect(url_for('home')) 
-
-# @app.route("/bill")
-# def bill():
-#      return render_template("bill.html")
-
 @app.route('/bill')
 def bill():
     mycursor.execute("SELECT * FROM order_item where orderid = '{}'".format(orderid))
