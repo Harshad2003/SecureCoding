@@ -2,18 +2,11 @@ from flask import Flask,request,render_template
 import psycopg2 
 from flask_sqlalchemy import SQLAlchemy
 app = Flask(__name__)
-# Purl = os.environ['POSTGRES_URL']
-# Puser = os.environ['POSTGRES_USER']
-# Ppw = os.environ['POSTGRES_PW']
-# Pdb = os.environ['POSTGRES_DB']
-#
-#DB_URL = 'postgresql+psycopg2://postgres:root@localhost:5432/postgres'
 import os
 
 user = os.environ["PG_USER"]
 password = os.environ["PG_PASSWORD"]
 uri = f"postgresql+psycopg2://{user}:{password}@localhost:5432/postgres"
-# print(DB_URL)
 app.config['SQLALCHEMY_DATABASE_URI'] = DB_URL
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False # silence the deprecation warning
 print('success')
